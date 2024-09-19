@@ -18,7 +18,7 @@ func main() {
 	maxBackups := flag.Int("max-backups", 7, "Max number of backups")
 	maxAge := flag.Int("max-age", 28, "Max age of log file in days")
 	compress := flag.Bool("compress", true, "Compress rotated log files with gzip")
-	port := flag.Int("port", 9000, "Port number")
+	port := flag.Int("port", 8090, "Port number")
 	flag.Parse()
 
 	if *maxSize <= 0 {
@@ -81,10 +81,20 @@ func handleConnection(conn net.Conn, logger *lumberjack.Logger) {
 }
 
 func listen(port int) (net.Listener, error) {
-	ln, err := vsock.Listen(uint32(port), nil)
-	if err != nil && strings.Contains(err.Error(), "vsock: not implemented") {
-		log.Println("OS does not support vsock: falling back to regular TCP socket")
+	listenTCP := func(port int) (net.Listener, error) {
 		return net.Listen("tcp", fmt.Sprintf(":%d", port))
 	}
+	contextID, err := vsock.ContextID()
+	if err != nil {
+		log.Printf("OS does not support vsock (error on getting CID: %v): falling back to regular TCP socket\n", err)
+		return listenTCP(port)
+	}
+
+	ln, err := vsock.ListenContextID(contextID, uint32(port), nil)
+	if err != nil && strings.Contains(err.Error(), "vsock: not implemented") {
+		log.Println("OS does not support vsock: falling back to regular TCP socket")
+		return listenTCP(port)
+	}
+	log.Println("Vsock connected on CID", contextID)
 	return ln, err
 }

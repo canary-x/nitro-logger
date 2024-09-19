@@ -22,7 +22,7 @@ Just run ```make build``` and find a nitro-logger binary in the root of the proj
 Example usage:
 
 ```shell
-nohup ./nitro-logger -log-file /var/log/my-nitro-app.log -port 9000 &
+nohup ./nitro-logger -log-file /var/log/my-nitro-app.log -port 8090 &
 ```
 
 To customize behavior, ```nitro-logger -h``` will show you the available options and their default values.
