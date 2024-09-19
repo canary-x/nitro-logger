@@ -22,7 +22,7 @@ Just run ```make build``` and find a nitro-logger binary in the root of the proj
 Example usage:
 
 ```shell
-nitro-logger -log-file /var/log/my-nitro-app.log -port 9000
+nohup ./nitro-logger -log-file /var/log/my-nitro-app.log -port 9000 &
 ```
 
 To customize behavior, ```nitro-logger -h``` will show you the available options and their default values.
@@ -31,6 +31,13 @@ be gzipped.
 
 Note: `vsock` is a Linux-specific feature, however to facilitate testing and development, the logger will fall back to
 listening on a regular TCP socket on platforms in which vsock is unsupported.
+
+Also note that it has no way of detecting other instances of itself running, so make sure you only run one.
+To terminate it run:
+```shell
+ps aux | grep nitro-logger | grep -v grep | awk '{print $2}' | xargs -r sudo kill -9
+```
+Eventually, you might want to daemonize this process, so it boots with the OS.
 
 ## Future development
 
