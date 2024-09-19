@@ -1,6 +1,6 @@
 module github.com/canary-x/nitro-logger
 
-go 1.23.1
+go 1.22
 
 require (
 	github.com/mdlayher/vsock v1.2.1

@@ -12,7 +12,7 @@ inaccessible due to the isolation of the enclave.
 There are no binaries for this just yet, but compiling is trivial.
 Requirements:
 
-- Go 1.23 or later (although this is probably compatible with much earlier versions)
+- Go 1.22 or later (although this is probably compatible with much earlier versions)
 - Make
 
 Just run ```make build``` and find a nitro-logger binary in the root of the project.

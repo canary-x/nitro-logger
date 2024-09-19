@@ -8,7 +8,3 @@ help:
 .PHONY: build
 build: ## build logger
 	@${GO} build -o nitro-logger
-
-.PHONY: build/linux
-build/linux: ## build logger
-	${GO} build -o nitro-logger
