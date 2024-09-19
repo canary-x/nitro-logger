@@ -53,6 +53,7 @@ func run(logger *lumberjack.Logger, port int) error {
 	}
 	defer ln.Close()
 
+	log.Println("File location is set to", logger.Filename)
 	log.Println("Listening on port", port)
 	for {
 		conn, err := ln.Accept()
