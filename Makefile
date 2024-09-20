@@ -8,3 +8,11 @@ help:
 .PHONY: build
 build: ## build logger
 	@${GO} build -o nitro-logger
+
+.PHONY: start
+start: stop ## start logger
+	@./nitro-logger >/dev/null 2>&1 & disown
+
+.PHONY: stop
+stop: ## stop logger
+	@ps aux | grep nitro-logger | grep -v grep | awk '{print $2}' | xargs -r kill -9

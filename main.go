@@ -74,6 +74,7 @@ func handleConnection(conn net.Conn, logger *lumberjack.Logger) {
 		if _, err := logger.Write(scanner.Bytes()); err != nil {
 			log.Printf("Nitro logger: error writing to log file: %v\n", err)
 		}
+		_, _ = logger.Write([]byte("\n"))
 	}
 	if err := scanner.Err(); err != nil {
 		log.Printf("Nitro logger: error reading from connection: %v\n", err)
