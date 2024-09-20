@@ -15,4 +15,4 @@ start: stop ## start logger
 
 .PHONY: stop
 stop: ## stop logger
-	@ps aux | grep nitro-logger | grep -v grep | awk '{print $2}' | xargs -r kill -9
+	@ps aux | grep nitro-logger | grep -v grep | awk '{print $$2}' | xargs -r kill -9
